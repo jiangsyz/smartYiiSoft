@@ -11,9 +11,20 @@ class SmartActiveRecord extends ActiveRecord{
 	}
 	//========================================
 	public function updateObj($param=array()){
+		//被修改字段的数量
+		$changeCount=0;
 		if(!is_array($param)) throw new SmartException("param is not array");
-		foreach($param as $key=>$val) $this->$key=$val;
-		if($this->update()!=1) throw new SmartException(json_encode($this->getErrors()));
+		foreach($param as $key=>$val){
+			//字段被修改了
+			if($this->$key!=$val){
+				$this->$key=$val;
+				$changeCount++;
+			}
+		}
+		//修改
+		if($changeCount>0){
+			if($this->update()!=1) throw new SmartException(json_encode($this->getErrors()));
+		}
 		return true;
 	}
 	//========================================
