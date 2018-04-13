@@ -17,13 +17,14 @@ class SmartException extends Exception{
 			$backtrace['function']=$row['function'];
 			$backtrace['class']=$row['class'];
 			$backtrace['line']=$row['line'];
-			$backtrace['args']=$row['args'];
+			//$backtrace['args']=$row['args'];
 			$backtraceInfo[]=$backtrace;
 		}
 		//记录日志(self::$safeFlag的作用是防止exceptionLog时又有SmartException抛出导致死循环)
 		if(isset(Yii::$app->smartLog) && self::$safeFlag){
 			self::$safeFlag=false;
-			Yii::$app->smartLog->exceptionLog(json_encode(array('msg'=>$msg,'backtrace'=>$backtraceInfo)));
+			$log=json_encode(array('msg'=>$msg,'code'=>$code,'backtrace'=>$backtraceInfo));
+			Yii::$app->smartLog->exceptionLog($log);
 			self::$safeFlag=true;
 		}
 		parent::__construct($msg,$code);
