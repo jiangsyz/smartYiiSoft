@@ -39,7 +39,7 @@ class SmartWebController extends Controller{
 		//初始化http请求基本信息
 		$this->initHttpInfo();
 		//校验签名
-		if(isset(Yii::$app->smartSignature)) Yii::$app->smartSignature->checkSignature();
+		if(isset(Yii::$app->smartSignature)) Yii::$app->smartSignature->checkWebSignature($this);
 		return parent::beforeAction($action);
 	}
 	//====================================================
