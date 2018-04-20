@@ -12,6 +12,8 @@ class SmartWebController extends Controller{
 		'requestTime'=>NULL,//请求时间
 		'requestData'=>NULL,//请求数据
 		'phpInput'=>NULL,//请求的原始数据的只读流
+		'session'=>NULL,//session
+		'cookie'=>NULL,//cookie
 		'responseTime'=>NULL,//处理完成时间
 		'responseData'=>NULL,//响应数据
 	];
@@ -28,8 +30,11 @@ class SmartWebController extends Controller{
 		$this->httpInfo['requestTime']=time();
 		$this->httpInfo['requestData']=$_REQUEST;
 		$this->httpInfo['phpInput']=file_get_contents('php://input');
+		$this->httpInfo['session']=isset($_SESSION)?$_SESSION:NULL;
+		$this->httpInfo['cookie']=isset($_COOKIE)?$_COOKIE:NULL;
 		//记录日志
-		if(isset(Yii::$app->smartLog)) Yii::$app->smartLog->httpRequestLog(json_encode($this->httpInfo));
+		if(isset(Yii::$app->smartLog)) 
+			Yii::$app->smartLog->httpRequestLog(json_encode($this->httpInfo));
 	}
 	//====================================================
 	//获取http请求基本信息
