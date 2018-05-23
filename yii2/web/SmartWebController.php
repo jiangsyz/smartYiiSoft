@@ -25,7 +25,7 @@ class SmartWebController extends Controller{
 		if($request->isGet) $this->httpInfo['httpType']='get';
 		$this->httpInfo['isAjax']=$request->isAjax?true:false;
 		$this->httpInfo['jsonpCallBack']=$request->get('jsonpcallback',NULL);
-		$this->httpInfo['domain']=$request->hostInfo;
+		$this->httpInfo['domain']=$request->hostInfo.$request->scriptUrl;
 		$this->httpInfo['uri']="{$this->id}/{$this->action->id}";
 		$this->httpInfo['requestTime']=time();
 		$this->httpInfo['requestData']=$_REQUEST;
