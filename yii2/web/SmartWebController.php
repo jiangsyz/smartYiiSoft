@@ -80,4 +80,16 @@ class SmartWebController extends Controller{
 			header("Location:{$data['uri']}");exit;
 		}
 	}
+	//====================================================
+	//获取get(urldecode)
+	public function requestGet($key,$defaultVal=false){
+		$val=Yii::$app->request->get($key,$defaultVal);
+		if(is_string($val) && urlencode(urldecode($val))==$val) return urldecode($val); else return $val;
+	}
+	//====================================================
+	//获取post(urldecode)
+	public function requestPost($key,$defaultVal=false){
+		$val=Yii::$app->request->post($key,$defaultVal);
+		if(is_string($val) && urlencode(urldecode($val))==$val) return urldecode($val); else return $val;
+	}
 }
