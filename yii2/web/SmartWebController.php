@@ -1,6 +1,6 @@
 <?php
 namespace yii\web;
-use yii;
+use Yii;
 class SmartWebController extends Controller{
 	//http请求基本信息
 	private $httpInfo=[
