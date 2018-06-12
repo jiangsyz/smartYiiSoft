@@ -21,5 +21,10 @@ class SmartDaemonController extends Controller{
 	}
 	//========================================
 	//守护进程休息
-	public function sleep(){sleep(Yii::$app->params["daemonSleep"]);}
+	public function sleep($seconds=NULL){
+		//确定睡眠时间
+		$seconds=$seconds===NULL?Yii::$app->params["daemonSleep"]:$seconds;
+		//睡眠
+		sleep($seconds);
+	}
 }
