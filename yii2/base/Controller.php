@@ -83,7 +83,7 @@ class Controller extends Component implements ViewContextInterface
     {
         $this->id = $id;
         $this->module = $module;
-        $this->runningId=uniqid().rand(111111,999999);
+        $this->runningId=uniqid().rand(111111,999999).'_'.date("Y_m_d_H_i_s",time());  ;
         parent::__construct($config);
     }
 
