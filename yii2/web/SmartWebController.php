@@ -54,6 +54,7 @@ class SmartWebController extends Controller{
 	响应
 	type=1:输出json,多用于api
 	type=2:跳转(可选择是否带提示信息)
+	type=3:直接输出
 	*/
 	public function response($type,$data){
 		$this->httpInfo['responseTime']=time();
@@ -81,6 +82,8 @@ class SmartWebController extends Controller{
 			//不带提示信息,直接跳转
 			header("Location:{$data['uri']}");exit;
 		}
+		//直接输出
+		if($type==3){die($data);}
 	}
 	//====================================================
 	//获取get(urldecode)
