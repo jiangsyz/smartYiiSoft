@@ -83,7 +83,9 @@ class SmartWebController extends Controller{
 			header("Location:{$data['uri']}");exit;
 		}
 		//直接输出
-		if($type==3){die($data);}
+		if($type==3){
+			echo $data;exit;
+		}
 	}
 	//====================================================
 	//获取get(urldecode)
