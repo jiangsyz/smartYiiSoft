@@ -23,7 +23,8 @@ class SmartActiveRecord extends ActiveRecord{
 		}
 		//修改
 		if($changeCount>0){
-			if($this->update()!=1) throw new SmartException(json_encode($this->getErrors()));
+			$result=$this->update();
+			if($result!=1) throw new SmartException(json_encode($this->getErrors())."({$result})");
 		}
 		return true;
 	}
