@@ -91,12 +91,20 @@ class SmartWebController extends Controller{
 	//获取get(urldecode)
 	public function requestGet($key,$defaultVal=false){
 		$val=Yii::$app->request->get($key,$defaultVal);
-		if(is_string($val) && urlencode(urldecode($val))==$val) return urldecode($val); else return $val;
+		if(is_string($val)){
+			if(urlencode(urldecode($val))==$val) $val=urldecode($val);
+			trim($val);
+		}
+		return $val;
 	}
 	//====================================================
 	//获取post(urldecode)
 	public function requestPost($key,$defaultVal=false){
 		$val=Yii::$app->request->post($key,$defaultVal);
-		if(is_string($val) && urlencode(urldecode($val))==$val) return urldecode($val); else return $val;
+		if(is_string($val)){
+			if(urlencode(urldecode($val))==$val) $val=urldecode($val);
+			trim($val);
+		}
+		return $val;
 	}
 }
