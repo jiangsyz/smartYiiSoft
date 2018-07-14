@@ -1,14 +1,17 @@
 <?php
 namespace yii\web;
 use Yii;
+use yii\base\Exception;
 class SmartWebController extends Controller{
 	//http请求基本信息
 	private $httpInfo=[
 		'httpType'=>NULL,
 		'isAjax'=>NULL,
 		'isJsonp'=>NULL,
-		'domain'=>NULL,//域名
-		'uri'=>NULL,//controller+action
+		'host'=>NULL,//域名
+		'file'=>NULL,//入口文件
+		'controllerId'=>NULL,//controllerId
+		'actionId'=>NULL,//actionId
 		'requestTime'=>NULL,//请求时间
 		'requestData'=>NULL,//请求数据
 		'phpInput'=>NULL,//请求的原始数据的只读流
@@ -23,13 +26,23 @@ class SmartWebController extends Controller{
 	//====================================================
 	//初始化http请求基本信息
 	private function initHttpInfo(){
+		//校验域名
+		if(!Yii::$app->params['host']) 
+			throw new Exception("miss params host");
+		if(!Yii::$app->request->hostInfo) 
+			throw new Exception("miss request host");
+		if(Yii::$app->params['host']!=Yii::$app->request->hostInfo) 
+			throw new Exception("params host <> request host");
+		//初始化信息
 		$request=Yii::$app->request;
 		if($request->isPost) $this->httpInfo['httpType']='post';
 		if($request->isGet) $this->httpInfo['httpType']='get';
 		$this->httpInfo['isAjax']=$request->isAjax?true:false;
 		$this->httpInfo['jsonpCallBack']=$request->get('jsonpcallback',NULL);
-		$this->httpInfo['domain']=$request->hostInfo.$request->scriptUrl;
-		$this->httpInfo['uri']="{$this->id}/{$this->action->id}";
+		$this->httpInfo['host']=$request->hostInfo;
+		$this->httpInfo['file']=$request->scriptUrl;
+		$this->httpInfo['controllerId']=$this->id;
+		$this->httpInfo['actionId']=$this->action->id;
 		$this->httpInfo['requestTime']=time();
 		$this->httpInfo['requestData']=$_REQUEST;
 		$this->httpInfo['phpInput']=file_get_contents('php://input');
