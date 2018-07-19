@@ -2,6 +2,7 @@
 namespace yii\web;
 use Yii;
 use yii\base\Exception;
+date_default_timezone_set('PRC');
 class SmartWebController extends Controller{
 	//http请求基本信息
 	private $httpInfo=[
